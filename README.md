@@ -1,6 +1,6 @@
 # Docker stack for Symfony projects
 
-For a *simpler* version visit: [Docker-for-Symfony-Lite](https://github.com/carlosas/docker-for-symfony-lite)
+For a *simpler* version visit a original Carlosas stack: [Docker-for-Symfony-Lite](https://github.com/carlosas/docker-for-symfony-lite)
 
 ## Basic info
 
