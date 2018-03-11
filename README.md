@@ -1,8 +1,4 @@
-# Docker stack for Symfony projects
-
-For a *simpler* version visit a original Carlosas stack: [Docker-for-Symfony-Lite](https://github.com/carlosas/docker-for-symfony-lite)
-
-## Basic info
+##Docker stack
 
 * [nginx](https://nginx.org/)
 * [PHP-FPM](https://php-fpm.org/)
@@ -38,7 +34,12 @@ This stack needs [docker](https://www.docker.com/) and [docker-compose](https://
     $ docker-compose up -d
     ```
 
-4. Get the bridge IP address
+4. For enter on a bash of PHP container:
+
+        ```sh
+        $ docker-compose exec php bash
+        ```
+5. Get the bridge IP address
 
     ```sh
     $ docker network inspect bridge | grep Gateway | grep -o -E '[0-9\.]+'
@@ -46,60 +47,18 @@ This stack needs [docker](https://www.docker.com/) and [docker-compose](https://
     $ ifconfig docker0 | awk '/inet:/{ print substr($2,6); exit }'
     ```
 
-5. Update your system's hosts file with the IP retrieved in **step 3**
-
-6. Prepare the Symfony application
-    1. Update Symfony env variables (*.env*)
-
-        ```
-        #...
-        DATABASE_URL=mysql://user:userpass@db:3306/mydb
-        #...
-        ```
-
-    2. Composer install & update the schema from the container
-
-        ```sh
-        $ docker-compose exec php bash
-        $ composer install
-        $ symfony doctrine:schema:update --force
-        ```
-7. (Optional) Xdebug: Configure your IDE to connect to port `9001` with key `PHPSTORM`
-
-## How does it work?
-
-We have the following *docker-compose* built images:
-
-* `nginx`: The Nginx webserver container in which the application volume is mounted.
-* `php`: The PHP-FPM container in which the application volume is mounted too.
-* `mysql`: The MySQL database container.
-* `elk`: Container which uses Logstash to collect logs, send them into Elasticsearch and visualize them with Kibana.
-* `redis`: The Redis server container.
-* `rabbitmq`: The RabbitMQ server/administration container.
-
-Running `docker-compose ps` should result in the following running containers:
-
-```
-           Name                          Command               State              Ports
---------------------------------------------------------------------------------------------------
-container_mysql         /entrypoint.sh mysqld            Up      0.0.0.0:3306->3306/tcp
-container_nginx         nginx                            Up      443/tcp, 0.0.0.0:80->80/tcp
-container_phpfpm        php-fpm                          Up      0.0.0.0:9000->9000/tcp
-container_redis         docker-entrypoint.sh redis ...   Up      6379/tcp
-container_rabbit        rabbitmq:3-management            Up      4369/tcp, 5671/tcp, 0.0.0.0:5672->5672/tcp, 15671/tcp, 25672/tcp, 0.0.0.0:15672->15672
-container_elk           /usr/bin/supervisord -n -c ...   Up      0.0.0.0:5044->5044/tcp, 0.0.0.0:5601->5601/tcp, 0.0.0.0:9200->9200/tcp, 9300/tcp
-```
+6. Update your system's hosts file with the IP retrieved in **step 3**
 
 ## Usage
 
 Once all the containers are up, our services are available at:
 
-* Symfony app: `http://symfony.dev:80`
-* Mysql server: `symfony.dev:3306`
-* Redis: `symfony.dev:6379`
-* Elasticsearch: `symfony.dev:9200`
-* Kibana: `http://symfony.dev:5601`
-* RabbitMQ: `http://symfony.dev:15672`
+* Symfony app: `http://dddpatterns.local:80`
+* Mysql server: `dddpatterns.local:3306`
+* Redis: `dddpatterns.local:6379`
+* Elasticsearch: `dddpatterns.local:9200`
+* Kibana: `http://dddpatterns.local:5601`
+* RabbitMQ: `http://dddpatterns.local:15672`
 * Log files location: *logs/nginx* and *logs/symfony*
 
 ---
