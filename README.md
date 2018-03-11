@@ -1,4 +1,4 @@
-##Docker stack
+## Stack
 
 * [nginx](https://nginx.org/)
 * [PHP-FPM](https://php-fpm.org/)
