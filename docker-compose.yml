@@ -60,6 +60,7 @@ services:
       volumes:
           - ./elk/logstash:/etc/logstash
           - ./elk/logstash/patterns:/opt/logstash/patterns
+          - ./.data/elasticsearch:/var/lib/elasticsearch/nodes
       volumes_from:
           - php
           - nginx
