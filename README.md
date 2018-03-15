@@ -1,4 +1,5 @@
 ## Stack
+Inspired on [Carlosas stack](https://github.com/carlosas/docker-for-symfony)
 
 * [nginx](https://nginx.org/)
 * [PHP-FPM](https://php-fpm.org/)
